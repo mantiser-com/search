@@ -1,0 +1,11 @@
+version: '2'
+services:
+  finder:
+    build: .
+    volumes:
+      - ./:/code
+    command: tail -f /etc/fstab
+  mongo:
+    image: mongo
+  redis:
+    image: redis
