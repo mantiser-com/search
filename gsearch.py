@@ -1,6 +1,9 @@
 from googlesearch import search
 from getemail import getEmails
 
+dontSearch =['wordpress','youtube','indeed']
+
+
 
 def searchGoogle(words):
 	'''
@@ -10,8 +13,13 @@ def searchGoogle(words):
 	print("###############################################################################################################")
 	print(words)
 	for url in search(words, stop=20):
-	    
-	    search_url=[url]
-	    getEmails(search_url,words)
+		serchthis = True
+		for dont in dontSearch:
+			if dont in url:
+				serchthis = False
+			
+		if serchthis:
+			search_url=[url]
+			getEmails(search_url,words)
 
 
