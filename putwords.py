@@ -1,9 +1,19 @@
 from gsearch import searchGoogle
+import time
+
+time.sleep(15)
+
+def DotheSearch(searchlist):
+	for words in searchlist:
+		print(words)
+		searchGoogle(words)
+		time.sleep(10)
+
 
 
 first = 'first.txt'
 secound = 'secund.txt'  
-
+searchlist_row=[]
 with open(first) as fp:  
 	fline = fp.readline()
 	cnt = 1
@@ -14,6 +24,7 @@ with open(first) as fp:
 			while sline:
 				sline = sp.readline()
 				scnt += 1
-				searchGoogle(fline.strip()+" "+sline.strip())
+				searchlist_row.append(fline.strip()+" "+sline.strip())
 		fline = fp.readline()
 		cnt += 1
+DotheSearch(searchlist_row)

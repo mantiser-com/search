@@ -4,7 +4,6 @@ EXPOSE 8080
 
 
 RUN apt-get update && apt-get install -y python3 python3-pip python3-dev git zlib1g-dev libjpeg-dev libffi-dev telnet curl vim
-RUN pip install --upgrade f
 
 RUN mkdir /code
 RUN mkdir /files
@@ -14,4 +13,4 @@ RUN pip3 install -r requirements.txt
 
 
 
-CMD ["python","-u","getlinks.py"]
+CMD ["python3","-u","putwords.py"]
