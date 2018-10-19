@@ -4,4 +4,5 @@ redis
 google-search
 google
 wp-version-checker
+mailchimp
 

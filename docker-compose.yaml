@@ -4,7 +4,7 @@ services:
     build: .
     volumes:
       - ./:/code
-   # command: tail -f /etc/fstab
+    command: tail -f /etc/fstab
   mongo:
     image: mongo
   redis:

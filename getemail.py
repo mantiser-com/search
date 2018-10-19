@@ -6,6 +6,7 @@ from collections import deque
 import re
 import hashlib
 import redis
+from addMailchimp import addToMail
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
 
@@ -17,6 +18,7 @@ def writeEmailToFile(email,site,tags):
     print("Adidng email to file")
     f = open("email.csv", "a")
     f.write("{0},{1},{2} \n".format(email,site,tags))
+    addToMail(email,site,tags)
     f.close()
 
 
