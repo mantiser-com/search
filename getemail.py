@@ -101,7 +101,7 @@ def getEmails(site,tags):
             path = url[:url.rfind('/')+1] if '/' in parts.path else url
         
             # get url's content
-            print("Processing %s" % url)
+            print("Processing {}".format(url.encode('utf-8')))
             try:
                 response = requests.get(url)
             except (requests.exceptions.MissingSchema, requests.exceptions.ConnectionError):
