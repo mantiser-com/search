@@ -1,7 +1,7 @@
 from googlesearch import search
 from getemail import getEmails
 
-dontSearch =['wordpress','youtube','indeed']
+dontSearch =['wordpress','youtube','indeed','wikipedia']
 
 
 
