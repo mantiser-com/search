@@ -13,7 +13,7 @@ def searchGoogle(words):
 
 	print("###############################################################################################################")
 	print(words)
-	for url in search(words, stop=20):
+	for url in search(words, stop=100):
 		print(url)
 		serchthis = True
 		for dont in dontSearch:
