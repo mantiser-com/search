@@ -1,11 +1,14 @@
 from gsearch import searchGoogle
 import time
 
+
+
+
 time.sleep(15)
 
 def DotheSearch(searchlist):
 	for words in searchlist:
-		print(words)
+		print(words.encode('utf-8'))
 		searchGoogle(words)
 		time.sleep(10)
 
@@ -14,11 +17,11 @@ def DotheSearch(searchlist):
 first = 'first.txt'
 secound = 'secund.txt'  
 searchlist_row=[]
-with open(first) as fp:  
+with open(first,encoding="utf8") as fp:  
 	fline = fp.readline()
 	cnt = 1
 	while fline:
-		with open(secound) as sp:  
+		with open(secound,encoding="utf8") as sp:  
 			sline = sp.readline()
 			scnt = 1
 			while sline:

@@ -17,7 +17,7 @@ def writeEmailToFile(email,site,tags):
     '''
     print("Adidng email to file")
     f = open("email.csv", "a")
-    f.write("{0},{1},{2} \n".format(email,site,tags))
+    f.write("{0},{1},{2} \n".format(email,site.encode('utf-8'),tags.encode('utf-8')))
     addToMail(email,site,tags)
     f.close()
 
@@ -104,7 +104,7 @@ def getEmails(site,tags):
             print("Processing {}".format(url.encode('utf-8')))
             try:
                 response = requests.get(url)
-            except (requests.exceptions.MissingSchema, requests.exceptions.ConnectionError):
+            except:
                 # ignore pages with errors
                 continue
         

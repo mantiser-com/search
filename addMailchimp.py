@@ -6,13 +6,20 @@ def addToMail(email,site,words):
 	'''
 	Add the email to our mailchimp list
 	'''
-	client = MailChimp(mc_api='XXX', mc_user='mattiashem2')
+	client = MailChimp(mc_api='')
 	
-	client.lists.members.create('d659e7469a', {
-	    'email_address': '{0}'.format(email),
-	    'status': 'subscribed',
-	    'merge_fields': {
-	        'FNAME': '{0}'.format(site),
-	        'LNAME': '{0}'.format(words),
-	           },
-	})
+	try:
+		client.lists.members.create('f1f0d85505', {
+	    		'email_address': '{0}'.format(email),
+	    		'status': 'subscribed',
+	    		'merge_fields': {
+	        		'FNAME': '{0}'.format(site.encode('utf-8')),
+	        		'LNAME': '{0}'.format(words.encode('utf-8')),
+	           			},
+			})
+
+
+	except:
+		print("Unvalid email")
+
+

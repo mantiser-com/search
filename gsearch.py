@@ -2,7 +2,7 @@ from googlesearch import search
 from getemail import getEmails
 import time
 
-dontSearch =['youtube','indeed','wikipedia','twitter','bing','yahoo']
+dontSearch =['youtube','indeed','wikipedia','twitter','bing','yahoo','templatemonster']
 
 
 
@@ -12,7 +12,7 @@ def searchGoogle(words):
 	'''
 
 	print("###############################################################################################################")
-	print(words)
+	print(words.encode('utf-8'))
 	for url in search(words, stop=100):
 		print(url)
 		serchthis = True
@@ -22,8 +22,11 @@ def searchGoogle(words):
 			
 		if serchthis:
 			search_url=[url]
+			#try:
 			getEmails(search_url,words)
+			#except:
+			#	print("got some error doing next page")
 			time.sleep(30)
 
-
+	print("################################# The End ######################")
 
