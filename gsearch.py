@@ -22,10 +22,10 @@ def searchGoogle(words):
 			
 		if serchthis:
 			search_url=[url]
-			#try:
-			getEmails(search_url,words)
-			#except:
-			#	print("got some error doing next page")
+			try:
+				getEmails(search_url,words)
+			except:
+				print("got some error doing next page")
 			time.sleep(30)
 
 	print("################################# The End ######################")
