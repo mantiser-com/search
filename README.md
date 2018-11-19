@@ -16,7 +16,7 @@ git clone git@github.com:Ollebo/fins-manager.git finder
 
 # Setup Docker Compose
 
-Copy the docker-compose.yaml fil from the cp folder to the fins folder (ORe what you called it)
+Copy the docker-compose.yaml fil from the cp folder to the *fins folder* (In the fins-manager repo) (ORe what you called it)
 
 
 # Buld and run
