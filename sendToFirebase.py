@@ -3,7 +3,7 @@ import json
 import datetime
 
 
-firebase = firebase.FirebaseApplication('https://fins-dff79.firebaseio.com/', None)
+firebase = firebase.FirebaseApplication('https://*.firebaseio.com/', None)
 
 def addEmailFirebase(email,user,site,words,botid):
 	'''

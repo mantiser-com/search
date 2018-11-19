@@ -1,70 +1,69 @@
-# finder
-Finder will search google for pages then scrape them for email address
-
-
-
-## Two files loooku
-
-The finder will use the two textfiles to add as search in the following setup
-
-
-If the file first.txt has the contet of 
-
-```
-hej
-bu
-bo
-```
-
-
-And the secound.txt has the contnet of
-
-
-```
-fu
-se
-de
-```
-
-
-We will do google search for
-
-
-hej fu
-hej se
-hej de
-
-
-bu fu
-bu se
-bu de
-
-
-bo fu
-bo se
-bo de
-
-
-## Mailchimp
-
-
-Add to the assmailchimp your api key and the id of the lits that you wnat the email to be store
-
-
-### csv
-
-Defult all email will be saved to the files email.csv
-
-
-
-## To run
-
-
-```
-
-docker-compose up
-
-```
-
-
 # fins-worker
+
+
+Fins worker get work from rabbitMQ and get what work it needs. Then start diffrent workers and get work done.
+After the work is done the result will be send into firebase.
+
+
+# Install
+
+Create folder fins (Ore what you want)
+
+```
+git clone git@github.com:Ollebo/fins-manager.git finder
+```
+
+
+# Setup Docker Compose
+
+Copy the docker-compose.yaml fil from the cp folder to the fins folder (ORe what you called it)
+
+
+# Buld and run
+In the fins folder (ORe what you called it)
+
+
+
+Build
+```
+docker-compose build
+```
+
+Run
+```
+docker-compose up
+```
+
+When you devlope you can set so the docker only trace fstab and you can exec into the contaner and start the service from inside the docker. 
+This is good when you develope.
+
+1. Set docker-comopse to use fstab
+
+```
+command: tail -f /etc/fstab
+```
+2. Start up with docker compose
+
+```
+docker-compose up
+```
+
+3. Exec into the continer
+
+find the container
+```
+docker ps
+```
+Exec into
+```
+docker exec -it "ID OF CONTANER" sh 
+```
+
+4. Start the service
+
+```
+python3 start.py
+```
+
+
+
