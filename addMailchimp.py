@@ -2,14 +2,19 @@ from mailchimp3 import MailChimp
 
 
 
-def addToMail(email,site,words):
+def addToMail(email,site,words,mailChimpList, MailChimpKey):
 	'''
 	Add the email to our mailchimp list
 	'''
-	client = MailChimp(mc_api='')
+	if MailChimpKey != "none":
+		print('no mailchimp')
+	else:
+
+
+		client = MailChimp(mc_api=MailChimpKey)
 	
-	try:
-		client.lists.members.create('f1f0d85505', {
+		try:
+			client.lists.members.create(mailChimList, {
 	    		'email_address': '{0}'.format(email),
 	    		'status': 'subscribed',
 	    		'merge_fields': {
@@ -19,7 +24,7 @@ def addToMail(email,site,words):
 			})
 
 
-	except:
-		print("Unvalid email")
+		except:
+			print("Unvalid email")
 
 

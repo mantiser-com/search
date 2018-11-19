@@ -1,19 +1,22 @@
 from googlesearch import search
 from getemail import getEmails
+from sendToFirebase import *
 import time
 
 dontSearch =['youtube','indeed','wikipedia','twitter','bing','yahoo','templatemonster']
 
 
 
-def searchGoogle(words):
+def searchGoogle(words,botid,user,email,mailchimpkey,mailchimplist):
 	'''
 	Search google for this words and get emails fromresult
 	'''
 
+	startScanFirebase(user,botid)
+
 	print("###############################################################################################################")
 	print(words.encode('utf-8'))
-	for url in search(words, stop=100):
+	for url in search(words, stop=3):
 		print(url)
 		serchthis = True
 		for dont in dontSearch:
@@ -22,11 +25,11 @@ def searchGoogle(words):
 			
 		if serchthis:
 			search_url=[url]
-			try:
-				getEmails(search_url,words)
-			except:
-				print("got some error doing next page")
-			time.sleep(30)
-
+			#try:
+			getEmails(search_url,words,user,botid,mailchimplist,mailchimpkey)
+			print(words)
+			#except:
+			#	print("got some error doing next page")
+			
 	print("################################# The End ######################")
-
+	doneScanFirebase(user,botid)

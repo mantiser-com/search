@@ -7,22 +7,24 @@ import re
 import hashlib
 import redis
 from addMailchimp import addToMail
+from sendToFirebase import *
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
 
 
-def writeEmailToFile(email,site,tags):
+def writeEmailToFile(email,site,tags,user,botid,mailchimpkey,mailchimplist):
     '''
     Write the email to file
     '''
     print("Adidng email to file")
     f = open("email.csv", "a")
     f.write("{0},{1},{2} \n".format(email,site.encode('utf-8'),tags.encode('utf-8')))
-    addToMail(email,site,tags)
+    addToMail(email,site,tags,mailchimplist,mailchimpkey)
+    addEmailFirebase(email,user,site,tags,botid)
     f.close()
 
 
-def haveSearched(url):
+def haveSearched(url,user,words,botid):
     '''
     Check if we have scraped the search
     '''
@@ -33,13 +35,14 @@ def haveSearched(url):
     if from_cache == None:
         #We dont haveything in the cache :-( 
         r.set(hash_url,url)
+        addUrlsFirebase(user,url,words,botid)
         return True
     else:
         print("Alreadyd scanned")
         return False
 
 
-def extractEmail(emails,site,tags):
+def extractEmail(emails,site,tags,user,botid,mailchimplist,mailchimpkey):
     '''
     Extract the email from the pages
     '''
@@ -59,14 +62,14 @@ def extractEmail(emails,site,tags):
             print(from_cache)
             if from_cache == None:
                 #We dont haveything in the cache :-( 
-                writeEmailToFile(email,site,tags)
+                writeEmailToFile(email,site,tags,user,botid,mailchimpkey,mailchimplist)
                 r.set(hash_email,email)
 
 
 
 
 
-def getEmails(site,tags):
+def getEmails(site,tags,user,botid,mailchimplist,mailchimpkey):
     #
     # Scrape the site and get all emails
     #
@@ -91,7 +94,7 @@ def getEmails(site,tags):
             print("break to man pages scanned")
             break
 
-        if haveSearched(url):
+        if haveSearched(url,user,tags,botid):
 
             processed_urls.add(url)
         
@@ -111,7 +114,7 @@ def getEmails(site,tags):
             # extract all email addresses and add them into the resulting set
             new_emails = set(re.findall(r"[a-z0-9\.\-+_]+@[a-z0-9\.\-+_]+\.[a-z]+", response.text, re.I))
             #emails.update(new_emails)
-            extractEmail(new_emails,url,tags)
+            extractEmail(new_emails,url,tags,user,botid,mailchimpkey,mailchimplist)
         
             # create a beutiful soup for the html document
             soup = BeautifulSoup(response.text)
