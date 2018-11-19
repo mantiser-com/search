@@ -10,7 +10,7 @@ After the work is done the result will be send into firebase.
 Create folder fins (Ore what you want)
 
 ```
-git clone git@github.com:Ollebo/fins-manager.git finder
+git clone git@github.com:Ollebo/finder.git finder
 ```
 
 
