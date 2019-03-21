@@ -17,7 +17,7 @@ def writeEmailToFile(email,site,tags,user,botid,mailchimpkey,mailchimplist):
     Write the email to file
     '''
     print("Adidng email to file")
-    f = open("email.csv", "a")
+    f = open("out/"+botid+".csv", "a")
     f.write("{0},{1},{2} \n".format(email,site.encode('utf-8'),tags.encode('utf-8')))
     addToMail(email,site,tags,mailchimplist,mailchimpkey)
     addEmailFirebase(email,user,site,tags,botid)
@@ -28,7 +28,7 @@ def haveSearched(url,user,words,botid):
     '''
     Check if we have scraped the search
     '''
-    hash_url_d = hashlib.md5(str(url).encode('utf-8'))
+    hash_url_d = hashlib.md5(str(botid+"-"+url).encode('utf-8'))
     hash_url =hash_url_d.hexdigest()
     from_cache = r.get(hash_url)
     print(from_cache)
@@ -56,7 +56,7 @@ def extractEmail(emails,site,tags,user,botid,mailchimplist,mailchimpkey):
         if process_email:
 
 
-            hash_email_d = hashlib.md5(str(email).encode('utf-8'))
+            hash_email_d = hashlib.md5(str(botid+"-"+email).encode('utf-8'))
             hash_email =hash_email_d.hexdigest()
             from_cache = r.get(hash_email)
             print(from_cache)

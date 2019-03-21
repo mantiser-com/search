@@ -6,5 +6,5 @@ google
 wp-version-checker
 mailchimp3
 requests
-python-firebase
+firebase_admin
 pika

@@ -9,11 +9,10 @@ def addToMail(email,site,words,mailChimpList, MailChimpKey):
 	if MailChimpKey != "none":
 		print('no mailchimp')
 	else:
-
-
-		client = MailChimp(mc_api=MailChimpKey)
-	
+		print("Adding email to mailchimp")
 		try:
+			client = MailChimp(mc_api=MailChimpKey)
+
 			client.lists.members.create(mailChimList, {
 	    		'email_address': '{0}'.format(email),
 	    		'status': 'subscribed',
@@ -22,8 +21,6 @@ def addToMail(email,site,words,mailChimpList, MailChimpKey):
 	        		'LNAME': '{0}'.format(words.encode('utf-8')),
 	           			},
 			})
-
-
 		except:
 			print("Unvalid email")
 

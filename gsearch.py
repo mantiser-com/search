@@ -27,9 +27,10 @@ def searchGoogle(words,botid,user,email,mailchimpkey,mailchimplist):
 			search_url=[url]
 			#try:
 			getEmails(search_url,words,user,botid,mailchimplist,mailchimpkey)
-			print(words)
+			print(words.encode('utf8'))
 			#except:
 			#	print("got some error doing next page")
 			
 	print("################################# The End ######################")
+	upload_blob(botid)
 	doneScanFirebase(user,botid)
