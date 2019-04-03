@@ -12,7 +12,7 @@ import time
 import json
 
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq',heartbeat_interval=600,
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq',heartbeat=600,
                                        blocked_connection_timeout=300))
 channel = connection.channel()
 
