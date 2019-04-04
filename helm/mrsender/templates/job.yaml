@@ -33,11 +33,11 @@ spec:
             - name: cron
               value: "{{ .Values.cron}}"
             volumeMounts:
-            - name: firebase-service-account
+            - name: auth-keys
               mountPath: "/keys"
               readOnly: true
           restartPolicy: OnFailure
           volumes:
-          - name: firebase-service-account 
+          - name: auth-keys 
             secret:
-              secretName: firebase-service-account
+              secretName: auth-keys

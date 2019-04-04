@@ -8,7 +8,7 @@ from firebase_admin import db
 from firebase_admin import storage
 
 
-cred = credentials.Certificate('/keys/fins-dff79-7e8d54a5f33e.json')
+cred = credentials.Certificate('/keys/fins.json')
 
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://fins-dff79.firebaseio.com',

@@ -5,7 +5,7 @@ def setupGcloud():
     '''
     This will setup and test configs
     '''
-    process = subprocess.Popen('gcloud auth activate-service-account --key-file /keys/reference-fact-144618-b3c83d8a097a.json', shell=True, stdout=subprocess.PIPE)
+    process = subprocess.Popen('gcloud auth activate-service-account --key-file /keys/gcloud.json', shell=True, stdout=subprocess.PIPE)
     print(process.communicate())
     if process.returncode == 0:
     	print("Sucessfull activted service account ")

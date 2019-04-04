@@ -16,7 +16,7 @@ def searchGoogle(words,botid,user,email,mailchimpkey,mailchimplist):
 
 	print("###############################################################################################################")
 	print(words.encode('utf-8'))
-	for url in search(words, stop=3):
+	for url in search(words, stop=50):
 		print(url)
 		serchthis = True
 		for dont in dontSearch:
