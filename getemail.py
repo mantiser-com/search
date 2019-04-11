@@ -6,10 +6,21 @@ from collections import deque
 import re
 import hashlib
 import redis
-from addMailchimp import addToMail
+from addMailchimp import addToMail 
+from addMailchimp import testMailChimp
 from sendToFirebase import *
 
 r = redis.StrictRedis(host='redis', port=6379, db=0)
+
+
+weGoodToGoMailchimp=True
+
+
+def testMailchimpApi(mailchimplist,mailchimpkey):
+    if testMailChimp(mailchimpkey,mailchimplist) == False:
+        print("No access to mailchimp")
+        weGoodToGoMailchimp=False
+
 
 
 def writeEmailToFile(email,site,tags,user,botid,mailchimpkey,mailchimplist):
@@ -19,7 +30,10 @@ def writeEmailToFile(email,site,tags,user,botid,mailchimpkey,mailchimplist):
     print("Adidng email to file")
     f = open("out/"+botid+".csv", "a")
     f.write("{0},{1},{2} \n".format(email,site.encode('utf-8'),tags.encode('utf-8')))
-    addToMail(email,site,tags,mailchimplist,mailchimpkey)
+    
+    #Test if we hade a working mailchimp
+    if weGoodToGoMailchimp: 
+        addToMail(email,site,tags,mailchimplist,mailchimpkey)
     addEmailFirebase(email,user,site,tags,botid)
     f.close()
 
@@ -81,6 +95,9 @@ def getEmails(site,tags,user,botid,mailchimplist,mailchimpkey):
     
     # a set of urls that we have already crawled
     processed_urls = set()
+
+    #Test if mailchimp api is good to go
+    testMailchimpApi(mailchimplist,mailchimpkey)
     
     # a set of crawled emails
     emails = set()
@@ -140,5 +157,4 @@ def getEmails(site,tags,user,botid,mailchimplist,mailchimpkey):
                     if not link in new_urls and not link in processed_urls:
                         new_urls.append(link)
     
-
 

@@ -12,6 +12,7 @@ import json
 
 #Helm Deployers
 from helmDeployer.emailsearch import deployEmailBot
+from helmDeployer.deleteHelm import deleteHelm
 
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq',heartbeat=600,
@@ -27,12 +28,25 @@ def deployHelm(message):
     Get data from rabbit and start
     '''
     mess = json.loads(message)
-    if mess['type'] == 'emailbot':
-        deployEmailBot(message)
+
+    if mess['action'] == 'create':
+        #Lets create the service
+        if mess['type'] == 'emailbot':
+            deployEmailBot(message)
+
+
+        else:
+            print('No deploy matching')
+    elif mess['action']=="delete":
+        #Delete the helm deploy
+        print('lets delete')
+        deleteHelm(message)
 
 
     else:
-        print('No deploy matching')
+        print('Did not get a valid action')
+
+
 def callback(ch, method, properties, body):
     #print(" [x] Received %r" % body)
     deployHelm(body)

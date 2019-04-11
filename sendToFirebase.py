@@ -16,7 +16,16 @@ firebase_admin.initialize_app(cred, {
 })
 bucket = storage.bucket()
 
-
+def logToUser(message,USER_ID):
+	print(message)
+	now = datetime.datetime.now()
+	log_ref= 	ref = db.reference('/todos/'+USER_ID+'/stats/events')
+	data = {
+			'message':message,
+        	'timestamp':now.isoformat()
+	}
+	result = log_ref.push(data)
+	print(result)
 
 
 def upload_blob(botid):
@@ -110,3 +119,43 @@ def doneScanFirebase(user,botid):
 	save_ref= 	ref = db.reference('/todos/'+user+'/bot/'+botid)
 	result = save_ref.set(result)
 
+
+
+
+def helmEbotDeployed(user,botid):
+	'''
+	Set ebot to deploy and log to use
+	'''
+	now = datetime.datetime.now()
+
+	#Get the running version 
+	ref = db.reference('/todos/'+user+'/ebot/'+botid)
+	result = ref.get()
+	
+	if result != None:
+		#print(result.encode('utf8'))
+		result['status'] = "Deployed"
+		result['Deployed At']=now.isoformat()
+		save_ref= 	ref = db.reference('/todos/'+user+'/ebot/'+botid)
+		result = save_ref.set(result)
+		logToUser('EMAIL_BOT ID {0} IS DEPLOYED'.format(botid),user)
+
+
+
+def helmEbotDeleted(user,botid):
+	'''
+	Set ebot to deploy and log to use
+	'''
+	now = datetime.datetime.now()
+
+	#Get the running version 
+	ref = db.reference('/todos/'+user+'/ebot/'+botid)
+	result = ref.get()
+	
+	if result != None:
+		#print(result.encode('utf8'))
+		result['status'] = "Deleted"
+		result['Deployed At']=now.isoformat()
+		save_ref= 	ref = db.reference('/todos/'+user+'/ebot/'+botid)
+		result = save_ref.set(result)
+		logToUser('EMAIL_BOT ID {0} IS DELETED'.format(botid),user)
