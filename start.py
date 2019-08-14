@@ -8,40 +8,34 @@
 import pika
 import time
 from gsearch import searchGoogle
+from addToTask import addTask
 import time
 import json
+from flask import Flask, request, render_template, url_for, redirect
+app = Flask(__name__)
 
+@app.route("/search/",methods = ['GET', 'POST'])
+def doGoogleSearch():
+	if request.method == 'POST':
+		#Get payload as text
+		payload = request.get_data(as_text=True)
+		#Convert paylaod to json
+		json_payload = json.loads(payload)
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq',heartbeat=600,
-                                       blocked_connection_timeout=300))
-channel = connection.channel()
+		for result in searchGoogle(json_payload['search'],json_payload['id'],json_payload['uid']):
+			result_json ={
+				"url" : result['formattedUrl'],
+				"uid" : json_payload["uid"],
+				"id" : json_payload["id"]				
+			}
+			addTask(result_json,in_seconds=None)
+		return "Google Search done !"
+	else:
+		return "We got get"
+@app.route("/", methods = ['GET', 'POST'])
+def home():
+	if request.method == 'POST':
+		return "We got post at /"
+	else:
+		return "We got get at /"
 
-channel.queue_declare(queue='task_queue', durable=True)
-
-
-
-def DotheSearch(message):
-	'''
-	Get data from rabbit and start
-	'''
-	mess = json.loads(message)
-
-	#Get all google search
-	if mess['type'] =='google' and mess['words'] != '':		
-		print('Start Google seacrh')
-		searchGoogle(mess['words'],mess['botid'],mess['user'],mess['email'],mess['MailChimpList'],mess['userMailChimpKey'])
-
-print(' [*] Waiting for messages. To exit press CTRL+C')
-
-def callback(ch, method, properties, body):
-    #print(" [x] Received %r" % body)
-    DotheSearch(body)
-    time.sleep(body.count(b'.'))
-    print(" [x] Done")
-    ch.basic_ack(delivery_tag = method.delivery_tag)
-
-
-channel.basic_qos(prefetch_count=1)
-channel.basic_consume('task_queue', callback)
-
-channel.start_consuming()

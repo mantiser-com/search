@@ -8,3 +8,7 @@ mailchimp3
 requests
 firebase_admin
 pika
+flask
+google-api-python-client
+google-cloud-tasks==1.1.0
+googleapis-common-protos==1.6.0
