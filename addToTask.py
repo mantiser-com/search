@@ -1,6 +1,7 @@
 
 from google.cloud import tasks_v2
 from google.protobuf import timestamp_pb2
+import json
 
 # Create a client.
 client = tasks_v2.CloudTasksClient()
@@ -8,10 +9,9 @@ client = tasks_v2.CloudTasksClient()
 
 def addTask(payload,in_seconds=None):
     # TODO(developer): Uncomment these lines and replace with your values.
-    project = 'northamlin-com';
-    queue = 'scraper-queue';
-    location = 'us-central1';
-    payload = 'hello';
+    project = 'mantiser-com';
+    queue = 'scraper-que';
+    location = 'europe-west1';
 
     # Construct the fully qualified queue name.
     parent = client.queue_path(project, location, queue)
@@ -20,7 +20,7 @@ def addTask(payload,in_seconds=None):
     task = {
             'app_engine_http_request': {  # Specify the type of request.
                 'http_method': 'POST',
-                'relative_uri': '/scrape',
+                'relative_uri': '/scrape/',
                 'app_engine_routing':{
                                     "service": "worker",
                                         }
@@ -28,7 +28,7 @@ def addTask(payload,in_seconds=None):
     }
     if payload is not None:
         # The API expects a payload of type bytes.
-        converted_payload = payload.encode()
+        converted_payload = json.dumps(payload).encode()
 
         # Add the payload to the request.
         task['app_engine_http_request']['body'] = converted_payload

@@ -22,16 +22,29 @@ def doGoogleSearch():
 		#Convert paylaod to json
 		json_payload = json.loads(payload)
 
-		for result in searchGoogle(json_payload['search'],json_payload['id'],json_payload['uid']):
+		for result in searchGoogle(json_payload['data'],json_payload['id'],json_payload['uid']):
 			result_json ={
-				"url" : result['formattedUrl'],
+				"action": "scrapeEmail",
+				"url" : result,
 				"uid" : json_payload["uid"],
-				"id" : json_payload["id"]				
+				"id" : json_payload["id"],
+				"word": json_payload['data']				
 			}
+			print(result_json)
 			addTask(result_json,in_seconds=None)
+		#Adding the close worker you
+		result_json ={
+				"action" : "close",
+				"uid" : json_payload["uid"],
+				"id" : json_payload["id"],
+				}
+		addTask(result_json,in_seconds=None)
+
+		
 		return "Google Search done !"
 	else:
 		return "We got get"
+
 @app.route("/", methods = ['GET', 'POST'])
 def home():
 	if request.method == 'POST':
