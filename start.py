@@ -28,7 +28,8 @@ def doGoogleSearch():
 				"url" : result,
 				"uid" : json_payload["uid"],
 				"id" : json_payload["id"],
-				"word": json_payload['data']				
+				"word": json_payload['data'],
+				"private": json_payload['private']				
 			}
 			print(result_json)
 			addTask(result_json,in_seconds=None)
