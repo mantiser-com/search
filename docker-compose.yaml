@@ -1,6 +1,6 @@
 version: '2'
 services:
-  finder:
+  search:
     build: .
     volumes:
       - ./:/code
@@ -8,4 +8,8 @@ services:
     ports:
       - 8080:8080
     environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/code/key/nortamlin_function_localy.json
+      SEARCH: "mattias"
+      NATS: nats
+  nats:
+    image: nats
+

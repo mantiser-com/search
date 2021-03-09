@@ -1,17 +1,12 @@
 from googlesearch import search
+from logg import loggNice
 import time
 import pprint
 from googleapiclient.discovery import build
 import json
 import re
 
-
-
-
-
-
-
-def searchGoogle(words,botid,user):
+def searchGoogle(searchWord):
   #	'''
   #	Search google for this words and get emails fromresult
   #	'''
@@ -22,17 +17,16 @@ def searchGoogle(words,botid,user):
   with open('exclude.json') as json_file:
     data = json.load(json_file)
 
-  print("###############################################################################################################")
   #print(words.encode('utf-8'))
   url_list=[]
 
 
-  for url in search(words, stop=50):
+  for url in search(searchWord, stop=1):
       isNotBlocked=True 
       for pattern in data['sites']:
         if re.search(pattern, url):
-            print('found a match!')
-            print('blocked site {0}'.format(url))
+            loggNice('found a match!')
+            loggNice('blocked site {0}'.format(url))
             isNotBlocked=False
       
       if isNotBlocked:     
