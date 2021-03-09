@@ -21,7 +21,7 @@ def searchGoogle(searchWord):
   url_list=[]
 
 
-  for url in search(searchWord, stop=1):
+  for url in search(searchWord, stop=30):
       isNotBlocked=True 
       for pattern in data['sites']:
         if re.search(pattern, url):
