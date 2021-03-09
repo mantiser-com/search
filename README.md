@@ -1,8 +1,30 @@
-# fins-worker
+# Mantiser Search
 
 
-Fins worker get work from rabbitMQ and get what work it needs. Then start diffrent workers and get work done.
-After the work is done the result will be send into firebase.
+Mantiser search find pages and url based on a search word.
+The url are then added to a nats que ore printed into stout in json 
+
+
+In the docker compose we also include a nats image to test the nats output.
+
+
+The search prash is added by env settings 
+
+      SEARCH: "mattias"
+      
+      
+
+# Config
+All config is done my env settings
+
+- NATS: nats
+Tells whats nats server to use
+
+
+- SEARCH: "mattias"
+Search word to search for
+
+
 
 
 # Install
@@ -10,7 +32,7 @@ After the work is done the result will be send into firebase.
 Create folder fins (Ore what you want)
 
 ```
-git clone git@github.com:Ollebo/finder.git finder
+git@github.com:mantiser-com/search.git
 ```
 
 
@@ -62,7 +84,7 @@ docker exec -it "ID OF CONTANER" sh
 4. Start the service
 
 ```
-python3 start.py
+python3 run.py
 ```
 
 
