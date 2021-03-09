@@ -17,10 +17,11 @@ Get the serach word and send to search engines to search for it
 for result in searchGoogle(os.getenv('SEARCH')):
     result_json ={
     	"action": "searchGoogle",
-    	"url" : result,				
+    	"url" : result,
+        "user_id": 	os.getenv('USER_ID')			
     }
     loggNice(result_json)
-    addNatsRun("result",result_json)
-
+    response = addNatsRun("result",result_json)
+    loggNice(response)
 
 loggNice("Search done !")

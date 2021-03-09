@@ -2,6 +2,7 @@ version: '2'
 services:
   search:
     build: .
+    image: search
     volumes:
       - ./:/code
     #command: tail -f /etc/fstab
@@ -9,6 +10,15 @@ services:
       - 8080:8080
     environment:
       SEARCH: "mantier"
+      NATS: nats
+      USER_ID: "ahsdjkhasjkdhajksdhajkshdk"
+    depends_on: 
+      - nats
+      - natsout
+  natsout:
+    build: .
+    command: python3 -u fromNats.py
+    environment:
       NATS: nats
     depends_on: 
       - nats
