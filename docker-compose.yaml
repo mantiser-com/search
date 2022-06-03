@@ -2,10 +2,10 @@ version: '2'
 services:
   search:
     build: .
-    image: search
+    image: mantiser/search
     volumes:
       - ./:/code
-    #command: tail -f /etc/fstab
+    command: tail -f /etc/fstab
     ports:
       - 8080:8080
     environment:

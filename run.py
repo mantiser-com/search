@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import time
 from gsearch import searchGoogle
-from addNats import addNatsRun
+from addNats import addNatsRunFind
 import time
 import json
 import os
@@ -12,16 +12,51 @@ from logg import loggNice
 '''
 Get the serach word and send to search engines to search for it
 '''
+from flask import Flask, request, render_template, url_for, redirect
+app = Flask(__name__)
 
-# Doing Google search
-for result in searchGoogle(os.getenv('SEARCH')):
-    result_json ={
-    	"action": "searchGoogle",
-    	"url" : result,
-        "user_id": 	os.getenv('USER_ID')			
-    }
-    loggNice(result_json)
-    response = addNatsRun("result",result_json)
-    loggNice(response)
+@app.route("/search/",methods = ['GET', 'POST'])
+def spider():
+    if request.method == 'POST':
+        #Get payload as text
+        payload = request.get_data(as_text=True)
+        #Convert paylaod to json
+        json_payload = json.loads(payload)
+        Private = False
+        search = json_payload['search']
+        # Doing Google search
+        for result in searchGoogle(search):
+            json_payload['action']="searchGoogle"
+            json_payload['url']=result
+            loggNice(json_payload)
+            response = addNatsRunFind("result",json_payload)
+            loggNice(response)
+        loggNice("Search done !")
 
-loggNice("Search done !")
+
+
+        return "Spider Done !"
+    else:
+        return "Spinder dont want GET"
+
+@app.route("/page/",methods = ['GET', 'POST'])
+def page():
+    if request.method == 'POST':
+        #Get payload as text
+        payload = request.get_data(as_text=True)
+        #Convert paylaod to json
+        json_payload = json.loads(payload)
+
+        json_payload['action']="Page"
+        loggNice(json_payload)
+        response = addNatsRunFind("result",json_payload)
+        loggNice(response)
+        loggNice("Page added to que !")
+        return "Page added to que !"
+        #except:
+        #    return "Bad data"
+
+
+        
+    else:
+        return "dont want GET"
