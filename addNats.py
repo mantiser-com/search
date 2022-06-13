@@ -6,10 +6,10 @@ from nats.aio.client import Client as NATS
 from nats.aio.errors import ErrConnectionClosed, ErrTimeout, ErrNoServers
 nest_asyncio.apply()
 
-async def addNats(loop,to,text):
+async def addNats(to,text):
     nc = NATS()
 
-    await nc.connect("{}:4222".format(os.getenv('NATS')), loop=loop)
+    await nc.connect("{}:4222".format(os.getenv('NATS')))
 
     # Stop receiving after 2 messages.
     await nc.publish(to, str(text).encode('utf8'))
@@ -29,9 +29,8 @@ def addNatsRunFind(to,searchJson):
 
 
 
-    loop = asyncio.new_event_loop()
-    loop.run_until_complete(addNats(loop,to,json_upload))
-    loop.close()
+    asyncio.run(addNats(to,json_upload))
+    #addNats(to,json_upload)
     return {
            "deliverd:{0}".format(to):"ok" 
     }

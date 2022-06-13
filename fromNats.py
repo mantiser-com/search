@@ -8,9 +8,14 @@ import json
 To test that the search adds data to nats we can use this python file
 '''
 async def run(loop):
+    
     nc = NATS()
+    async def disconnected_cb():
+        print("Got disconnected...")
+    async def reconnected_cb():
+        print("Got reconnected...")
 
-    await nc.connect("{}:4222".format(os.getenv('NATS')), loop=loop)
+    await nc.connect("{}:4222".format(os.getenv('NATS')))
 
     async def message_handler(msg):
         subject = msg.subject
@@ -51,6 +56,8 @@ async def run(loop):
 
 
 if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
+    loop = asyncio.new_event_loop()
+    print("s")
     loop.run_until_complete(run(loop))
     loop.run_forever()
+    loop.close()
