@@ -1,67 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    mantiser-com/user_id: "1112"
   name: api
+  labels:
+    app: mantiser-api
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: ollebo-api
+      app: mantiser-api
   template:
     metadata:
+      annotations:
+        app: mantiser-api
       labels:
-        app: ollebo-api
+        app: mantiser-api
     spec:
       containers:
-        - image: ollebo/api
-          name: api
+        - name: api
+          image: {{ .Values.image.repository}}:{{ .Values.image.tag }}
           imagePullPolicy: Always
           env:
-            - name: REDISHOST
-              value: redis
-            - name: REDIS
-              value: redis
-            - name: REDISPORT
-              value: "6379"
-            - name: AUTH_TOKENS
-              value: "['1234','6789']"
-            - name: ELASTICSEARCH
-              value: http://elasticsearch:9200
-            - name: ES_INDEX
-              value: ollebo
-            - name: INDB
-              value: influxdb
-            - name: INDB_PORT
-              value: "8086"
-            - name: INDB_USER
-              value: influxdb
-            - name: INDB_PASSWORD
-              value: influxdb
-            - name: INDB_DATABASE
-              value: ollebo
-            - name: INDB_TOKEN
-              value: aaaaaaaaa
-            - name: INDB_ORG
-              value: ollebo
-            - name:  MEILISEARCH
-              value: http://meilisearch:7700
-            - name: PROJECT
-              value: ollebo
-            - name: MONGOURL
-              value: urlsiiii
+            - name: NATS
+              value: nats
+            - name: SEARCH
+              value: "Mantiser"
           resources:
             requests:
               cpu: 100m
-              memory: 128Mi
-            
+              memory: 256Mi
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: ollebo-api
+    app: mantiser-api
   name: api
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: api.ollebo.com
+  namespace: mantiser
 spec:
   ports:
   - name: api
@@ -69,6 +46,25 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: api
+    app: mantiser-api
   sessionAffinity: None
   type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: search
+  name: search
+  namespace: mantiser
+spec:
+  ports:
+  - name: api
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: mantiser-api
+  sessionAffinity: None
+  type: ClusterIP
+
