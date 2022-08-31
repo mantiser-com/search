@@ -29,6 +29,18 @@ spec:
               value: nats
             - name: SEARCH
               value: "Mantiser"
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mantiser 
+                  key: API_KEY
+                  optional: false
+            - name: CSE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: mantiser 
+                  key: CSE_ID
+                  optional: false
           resources:
             requests:
               cpu: 100m
