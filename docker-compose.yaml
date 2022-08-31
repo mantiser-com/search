@@ -12,6 +12,9 @@ services:
       SEARCH: "mantier"
       NATS: nats
       USER_ID: "ahsdjkhasjkdhajksdhajkshdk"
+      API_KEY: "AIzaSyD8svOCx318Wk1NsUhxtDRv-KRNZtDDbHQ"
+      CSE_ID: "012631876750147547556:j4ufbjipbdi"
+
     depends_on: 
       - nats
       - natsout

@@ -1,5 +1,5 @@
 FROM python
-RUN pip3 install requests google-search google mailchimp3 requests flask google-api-python-client google-cloud-tasks googleapis-common-protos nats-py nest_asyncio
+RUN pip3 install requests google-search google mailchimp3 requests flask google-api-python-client google-cloud-tasks googleapis-common-protos nats-py nest_asyncio duckduckgo_search google-api-python-client BeautifulSoup4
 EXPOSE 5000
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8

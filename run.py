@@ -23,10 +23,14 @@ def spider():
         #Convert paylaod to json
         json_payload = json.loads(payload)
         Private = False
+        try: 
+            action = json_payload['action']
+        except:
+            action = "search"
         search = json_payload['search']
         # Doing Google search
         for result in searchGoogle(search):
-            json_payload['action']="searchGoogle"
+            json_payload['action']=action
             json_payload['url']=result
             loggNice(json_payload)
             response = addNatsRunFind("result",json_payload)
