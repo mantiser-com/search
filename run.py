@@ -50,8 +50,11 @@ def page():
         payload = request.get_data(as_text=True)
         #Convert paylaod to json
         json_payload = json.loads(payload)
-
-        json_payload['action']="Page"
+        try: 
+            action = json_payload['action']
+        except:
+            action = "search"
+        json_payload['action']=action
         loggNice(json_payload)
         response = addNatsRunFind("result",json_payload)
         loggNice(response)

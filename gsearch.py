@@ -75,6 +75,22 @@ def searchGoogle(searchWord):
           url_list.append(url['href'])
     
 
+  results_ddg = ddg(searchWord, region='se-sv', safesearch='Moderate', time='y', max_results=60)
+  #
+  for url in results_ddg:
+    print("ddg: "+ url['href'])
+    isNotBlocked=True
+    for pattern in data['sites']: 
+      if re.search(pattern, url['href']):
+          loggNice('found a match!')
+          loggNice('blocked site {0}'.format(url['href']))
+          isNotBlocked=False
+
+      if isNotBlocked:     
+          url_list.append(url['href'])
+
+
+
 
   # using google custom search
   service = build("customsearch", "v1", developerKey=my_api_key)
