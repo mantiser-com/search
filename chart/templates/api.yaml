@@ -26,7 +26,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: NATS
-              value: nats
+              value: nats.nats.svc
             - name: SEARCH
               value: "Mantiser"
             - name: API_KEY
