@@ -42,11 +42,17 @@ def get_organic_results(searchWord):
   return data
 
 
+def searchGoogleLiveddg(searchWord,limit=60):
+  results_ddg = ddg(searchWord, region='wt-wt', safesearch='Moderate', time='y', max_results=limit) 
+  return results_ddg
+
+def searchGoogleLiveG(searchWord,limit=60):
+  service = build("customsearch", "v1", developerKey=my_api_key)
+  results_cse = service.cse().list(q=searchWord, cx=my_cse_id).execute()
+  return results_cse
 
 
-
-
-def searchGoogle(searchWord):
+def searchGoogle(searchWord,limit=60):
   #	'''
   #	Search google for this words and get emails fromresult
   #	'''
@@ -60,7 +66,7 @@ def searchGoogle(searchWord):
   #print(words.encode('utf-8'))
   url_list=[]
   #Uisng ddg
-  results_ddg = ddg(searchWord, region='wt-wt', safesearch='Moderate', time='y', max_results=60)
+  results_ddg = ddg(searchWord, region='wt-wt', safesearch='Moderate', time='y', max_results=limit)
   #
   for url in results_ddg:
     print("ddg: "+ url['href'])
@@ -75,7 +81,7 @@ def searchGoogle(searchWord):
           url_list.append(url['href'])
     
 
-  results_ddg = ddg(searchWord, region='se-sv', safesearch='Moderate', time='y', max_results=60)
+  results_ddg = ddg(searchWord, region='se-sv', safesearch='Moderate', time='y', max_results=limit)
   #
   for url in results_ddg:
     print("ddg: "+ url['href'])

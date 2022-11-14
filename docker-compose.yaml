@@ -14,17 +14,23 @@ services:
       USER_ID: "ahsdjkhasjkdhajksdhajkshdk"
       API_KEY: "AIzaSyD8svOCx318Wk1NsUhxtDRv-KRNZtDDbHQ"
       CSE_ID: "012631876750147547556:j4ufbjipbdi"
-
-    depends_on: 
-      - nats
-      - natsout
+      PYTHONUNBUFFERED: 1
+    networks:
+      - mantiser
   natsout:
     build: .
-    command: python3 -u fromNats.py
+    command: tail -f /etc/fstab
+    volumes:
+      - ./:/code
     environment:
       NATS: nats
-    depends_on: 
-      - nats
-  nats:
-    image: nats
+    networks:
+      - mantiser
+networks:
+  mantiser:
+    external: true
+
+  
+
+  
 
