@@ -4,6 +4,7 @@ from gsearch import searchGoogle, searchGoogleLiveddg
 from addNats import addNatsRunFind
 import time
 import json
+import uuid
 import os
 from logg import loggNice
 
@@ -25,7 +26,8 @@ def setValues(payload):
         try: 
             postid = payload['postid']
         except:
-            postid = "1"    
+            #If we dont have a postid we create one
+            postid = str(uuid.uuid1())
         try: 
             scannerid = payload['scannerid']
         except:
@@ -83,6 +85,10 @@ def spider():
             search = json_payload['action']
         except:
             search = "none"
+        try: 
+            scannerid = json_payload['scannerid']
+        except:
+            scannerid = str(uuid.uuid1()) 
 
         #Set json_payload the the default values
         json_payload=setValues(json_payload)
@@ -91,6 +97,7 @@ def spider():
             json_payload['action']=action
             json_payload['url']=result
             json_payload['search']=search
+            json_payload['scannerid']=scannerid
             loggNice(json_payload)
             
             #Send to nats
