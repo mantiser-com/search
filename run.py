@@ -35,7 +35,7 @@ def setValues(payload):
         try: 
             getemail = payload['getemail']
         except:
-            getemail = "false" 
+            getemail = "true" 
         try: 
             prefix = payload['prefix']
         except:
