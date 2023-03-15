@@ -103,6 +103,7 @@ def searchGoogle(searchWord,limit=60):
   results_cse = service.cse().list(q=searchWord, cx=my_cse_id).execute()
   for url in results_cse['items']:
     print("custom search : "+ url['link'])
+    isNotBlocked=True
     for pattern in data['sites']:
       if re.search(pattern, url['link']):
           loggNice('found a match!')
