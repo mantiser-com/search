@@ -51,8 +51,15 @@ def setValues(payload):
         try: 
             deep = payload['deep']
         except:
-            deep = 5
-
+            deep = 20
+        try: 
+            tag = payload['tag']
+        except:
+            tag = "none"
+        try: 
+            org = payload['org']
+        except:
+            org = "private"
 
         jsonData = {
                     "userid":userid,
@@ -62,7 +69,9 @@ def setValues(payload):
                     "project": project,
                     "prefix": prefix,
                     "dest": dest,
-                    "deep": deep 
+                    "deep": deep,
+                    "tag": tag,
+                    "org": org,
                     } 
         return jsonData
 
