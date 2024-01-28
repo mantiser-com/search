@@ -51,7 +51,7 @@ def setValues(payload):
         try: 
             deep = payload['deep']
         except:
-            deep = 20
+            deep = 5
         try: 
             tag = payload['tag']
         except:
