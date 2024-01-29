@@ -52,7 +52,6 @@ metadata:
   labels:
     app: mantiser-api
   name: api
-  namespace: mantiser
 spec:
   ports:
   - name: api
@@ -70,7 +69,6 @@ metadata:
   labels:
     app: search
   name: search
-  namespace: mantiser
 spec:
   ports:
   - name: api
